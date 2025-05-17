@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("JobMan.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bcb0dd649a272632b91834409d4baa265df8f524")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a40eb35ce9f5ad05478c02b9c6555780d3a7ba4e")]
 [assembly: System.Reflection.AssemblyProductAttribute("JobMan.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("JobMan.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -1,0 +1,130 @@
+[
+  {
+    "ContainingType": "JobMap.API.Controllers.ApplicationController",
+    "Method": "CreateJobApplication",
+    "RelativePath": "api/application/create-job-application",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "CompanyName",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "RoleTitle",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Location",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "StatusId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "MainContactName",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "MainContactEmail",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "MainContactPhone",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "HiringLikelihoodId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "OpeningDate",
+        "Type": "System.Nullable\u00601[[System.DateTime, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "DateApplied",
+        "Type": "System.Nullable\u00601[[System.DateTime, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "ClosingDate",
+        "Type": "System.Nullable\u00601[[System.DateTime, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "SalaryExpectationRange",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "RequiredDocumentation",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "IsClosed",
+        "Type": "System.Boolean",
+        "IsRequired": false
+      },
+      {
+        "Name": "Notes",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "CreatedAt",
+        "Type": "System.Nullable\u00601[[System.DateTime, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "UpdatedAt",
+        "Type": "System.Nullable\u00601[[System.DateTime, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JobMap.API.Controllers.ApplicationController",
+    "Method": "GetJobApplicationById",
+    "RelativePath": "api/application/get-job-application-by-id/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "JobMap.API.Controllers.ApplicationController",
+    "Method": "GetAllJobApplications",
+    "RelativePath": "api/application/get-job-applications",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  }
+]
