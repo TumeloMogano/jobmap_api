@@ -14,14 +14,15 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+//Inject DBContext dependencies into the application
+builder.Services.AddDbContext<JobMapDbContext>(options
+    => options.UseSqlServer(builder.Configuration.GetConnectionString("JobMapDefaultConnection")));
+
 //Register Repositories and Services
 builder.Services.AddScoped<IApplicationRepository, ApplicationRepository>();
 builder.Services.AddScoped<IApplicationService, ApplicationService>();
 
-
-//Inject DBContext dependencies into the application
-builder.Services.AddDbContext<JobMapDbContext>(options
-    => options.UseSqlServer(builder.Configuration.GetConnectionString("JobMapDefaultConnection")));
+//builder.Services.AddAutoMapper(typeof(JobMap.API.Utilities.Mappings.JobApplicationProfile).Assembly);
 
 var app = builder.Build();
 

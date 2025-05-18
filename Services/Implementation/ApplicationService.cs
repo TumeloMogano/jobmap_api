@@ -3,6 +3,7 @@ using JobMap.API.Models.Entities;
 using JobMap.API.Repositories.Contracts;
 using JobMap.API.Services.Contracts;
 using JobMap.API.Utilities.OperationResults;
+using Microsoft.AspNetCore.Http.HttpResults;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace JobMap.API.Services.Implementation
@@ -116,6 +117,60 @@ namespace JobMap.API.Services.Implementation
             return response;
         }
 
+        public async Task<JobApplicationResponse?> UpdateJobApplicationAsync(Guid id, UpdateJobApplicationCommand jobApplication)
+        {
+            var newApplication = new JobApplication
+            {
+                Id = id,
+                CompanyName = jobApplication.CompanyName,
+                RoleTitle = jobApplication.RoleTitle,
+                Location = jobApplication.Location,
+                StatusId = jobApplication.StatusId,
+                MainContactName = jobApplication.MainContactName,
+                MainContactEmail = jobApplication.MainContactEmail,
+                MainContactPhone = jobApplication.MainContactPhone,
+                HiringLikelihoodId = jobApplication.HiringLikelihoodId,
+                OpeningDate = jobApplication.OpeningDate,
+                DateApplied = jobApplication.DateApplied,
+                ClosingDate = jobApplication.ClosingDate,
+                SalaryExpectationRange = jobApplication.SalaryExpectationRange,
+                RequiredDocumentation = jobApplication.RequiredDocumentation,
+                IsClosed = jobApplication.IsClosed,
+                Notes = jobApplication.Notes,
+                UpdatedAt = DateTime.Now
+            };
+
+            var updatedApplication = await _repository.UpdateJobApplicationAsync(newApplication);
+
+            if (updatedApplication is null)
+                return null;
+
+            var response = new JobApplicationResponse
+            {
+                Id = updatedApplication.Id,                
+                CompanyName = updatedApplication.CompanyName,
+                RoleTitle = updatedApplication.RoleTitle,
+                Location = updatedApplication.Location,
+                StatusId = updatedApplication.StatusId,
+                MainContactEmail = updatedApplication.MainContactEmail,
+                MainContactName = updatedApplication.MainContactName,
+                MainContactPhone = updatedApplication.MainContactPhone,
+                HiringLikelihoodId = updatedApplication.HiringLikelihoodId,
+                OpeningDate = updatedApplication.OpeningDate,
+                DateApplied = updatedApplication.DateApplied,
+                ClosingDate = updatedApplication.ClosingDate,
+                SalaryExpectationRange = updatedApplication.SalaryExpectationRange,
+                RequiredDocumentation = updatedApplication.RequiredDocumentation,
+                IsClosed = updatedApplication.IsClosed,
+                Notes = updatedApplication.Notes,
+                CreatedAt = updatedApplication.CreatedAt,
+                UpdatedAt = updatedApplication.UpdatedAt
+            };
+
+            return response;
+
+        }
+
         public async Task<OperationResult> RemoveJobApplicationAsync(Guid id)
         {
             var command = await _repository.RemoveJobApplicationAsync(id);
@@ -137,5 +192,6 @@ namespace JobMap.API.Services.Implementation
 
             return response;
         }
+
     }
 }

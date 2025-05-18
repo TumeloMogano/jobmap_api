@@ -7,6 +7,7 @@ namespace JobMap.API.Repositories.Contracts
         Task<IEnumerable<JobApplication>> GetJobApplicationsAsync();
         Task<JobApplication?> GetJobApplicationByIdAsync(Guid id);
         Task<JobApplication> CreateJobApplicationAsync(JobApplication application);
+        Task<JobApplication?> UpdateJobApplicationAsync(JobApplication application);
         Task<bool> RemoveJobApplicationAsync(Guid id);
     }
 }

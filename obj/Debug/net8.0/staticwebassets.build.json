@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "rc8XlqltRh5P4d24eN2d4J9zR/3NvxDDTvBmMknVkLg=",
+  "Source": "JobMap.API",
+  "BasePath": "_content/JobMap.API",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
