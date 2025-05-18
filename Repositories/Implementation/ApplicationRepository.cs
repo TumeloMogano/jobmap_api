@@ -39,11 +39,26 @@ namespace JobMap.API.Repositories.Implementation
             return application;
         }
 
+        public async Task<JobApplication?> UpdateJobApplicationAsync(JobApplication application)
+        {
+            var existingApplication = await _context.JobApplications.FirstOrDefaultAsync(p => p.Id == application.Id);
+
+            if (existingApplication != null)
+            {
+                _context.Entry(existingApplication).CurrentValues.SetValues(application);
+                await _context.SaveChangesAsync();
+                return existingApplication;
+            }
+
+            return null;
+        }
+
         public async Task<bool> RemoveJobApplicationAsync(Guid id)
         {
             var jobApplication = await _context.JobApplications.FindAsync(id);
 
             return true;
         }
+
     }
 }

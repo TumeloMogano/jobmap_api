@@ -1,8 +1,18 @@
 [
   {
     "ContainingType": "JobMap.API.Controllers.ApplicationController",
+    "Method": "GetAllJobApplications",
+    "RelativePath": "api/jobapplication",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JobMap.API.Controllers.ApplicationController",
     "Method": "CreateJobApplication",
-    "RelativePath": "api/application/create-job-application",
+    "RelativePath": "api/jobapplication",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -97,8 +107,45 @@
   },
   {
     "ContainingType": "JobMap.API.Controllers.ApplicationController",
+    "Method": "UpdateJobApplication",
+    "RelativePath": "api/jobapplication",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": false
+      },
+      {
+        "Name": "model",
+        "Type": "JobMap.API.Models.DTOs.JobApplication.UpdateJobApplicationCommand",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JobMap.API.Controllers.ApplicationController",
+    "Method": "RemoveJobApplication",
+    "RelativePath": "api/jobapplication",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JobMap.API.Controllers.ApplicationController",
     "Method": "GetJobApplicationById",
-    "RelativePath": "api/application/get-job-application-by-id/{id}",
+    "RelativePath": "api/jobapplication/{id}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -109,22 +156,6 @@
         "IsRequired": true
       }
     ],
-    "ReturnTypes": [
-      {
-        "Type": "System.Void",
-        "MediaTypes": [],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "JobMap.API.Controllers.ApplicationController",
-    "Method": "GetAllJobApplications",
-    "RelativePath": "api/application/get-job-applications",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
     "ReturnTypes": []
   }
 ]

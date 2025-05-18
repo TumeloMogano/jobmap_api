@@ -336,3 +336,5 @@ C:\Users\ramal\OneDrive\Desktop\2025\Software Engineering Projects\My Projects\J
 C:\Users\ramal\OneDrive\Desktop\2025\Software Engineering Projects\My Projects\JobApplicationTracker\JobMap.API\obj\Debug\net8.0\JobMap.API.pdb
 C:\Users\ramal\OneDrive\Desktop\2025\Software Engineering Projects\My Projects\JobApplicationTracker\JobMap.API\obj\Debug\net8.0\JobMap.API.genruntimeconfig.cache
 C:\Users\ramal\OneDrive\Desktop\2025\Software Engineering Projects\My Projects\JobApplicationTracker\JobMap.API\obj\Debug\net8.0\ref\JobMap.API.dll
+C:\Users\ramal\OneDrive\Desktop\2025\Software Engineering Projects\My Projects\JobApplicationTracker\JobMap.API\bin\Debug\net8.0\AutoMapper.dll
+C:\Users\ramal\OneDrive\Desktop\2025\Software Engineering Projects\My Projects\JobApplicationTracker\JobMap.API\bin\Debug\net8.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll

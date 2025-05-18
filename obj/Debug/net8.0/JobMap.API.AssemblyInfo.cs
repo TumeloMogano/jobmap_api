@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("JobMap.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a40eb35ce9f5ad05478c02b9c6555780d3a7ba4e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+be4a3c976269d970e0772aa394e78b50609d2f8e")]
 [assembly: System.Reflection.AssemblyProductAttribute("JobMap.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("JobMap.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

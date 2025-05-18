@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace JobMap.API.Controllers
 {
-    [Route("api/application")]
+    [Route("api/jobapplication")]
     [ApiController]
     public class ApplicationController : ControllerBase
     {
@@ -18,7 +18,6 @@ namespace JobMap.API.Controllers
         }
 
         [HttpGet]
-        [Route("get-job-applications")]
         public async Task<IActionResult> GetAllJobApplications()
         {           
             try
@@ -34,7 +33,7 @@ namespace JobMap.API.Controllers
         }
 
         [HttpGet]
-        [Route("get-job-app-by-id/{id:Guid}")]
+        [Route("{id:Guid}")]
         public async Task<IActionResult> GetJobApplicationById(Guid id)
         {
             try
@@ -55,7 +54,6 @@ namespace JobMap.API.Controllers
         }
 
         [HttpPost]
-        [Route("create-job-app")]
         public async Task<IActionResult> CreateJobApplication([FromForm] CreateJobApplicationCommand model)
         {
             try
@@ -70,8 +68,28 @@ namespace JobMap.API.Controllers
             }
         }
 
+        [HttpPut]
+        public async Task<IActionResult> UpdateJobApplication(Guid id, UpdateJobApplicationCommand model)
+        {
+            try
+            {
+                var response = await _service.UpdateJobApplicationAsync(id, model);
+
+                if (response == null) 
+                    return BadRequest(
+                        new { 
+                               message = "Bad Request, could not update job application."                               
+                             });
+
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "internal Server Error. Please Contact Support. " + ex.Message);
+            }
+        }
+
         [HttpDelete]
-        [Route("delete-job-app")]
         public async Task<IActionResult> RemoveJobApplication(Guid id)
         {
             try
