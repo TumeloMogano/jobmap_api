@@ -31,7 +31,7 @@ namespace JobMap.API.Repositories.Implementation
             return jobApplication;
         }
 
-        public async Task<JobApplication> CreateJobApplicationAsync(JobApplication application)
+        public async Task<JobApplication?> CreateJobApplicationAsync(JobApplication application)
         {
             await _context.JobApplications.AddAsync(application);
             await _context.SaveChangesAsync();
