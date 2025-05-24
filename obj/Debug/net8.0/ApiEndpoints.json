@@ -120,7 +120,7 @@
       },
       {
         "Name": "model",
-        "Type": "JobMap.API.Models.DTOs.JobApplication.UpdateJobApplicationCommand",
+        "Type": "JobMap.API.Models.DTOs.JobApplication.UpdateJobApplicationRequest",
         "IsRequired": true
       }
     ],

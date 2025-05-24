@@ -1,9 +1,11 @@
-﻿using JobMap.API.Models.DTOs.JobApplication;
+﻿using Azure.Core;
+using JobMap.API.Models.DTOs.JobApplication;
 using JobMap.API.Models.Entities;
 using JobMap.API.Repositories.Contracts;
 using JobMap.API.Services.Contracts;
 using JobMap.API.Utilities.OperationResults;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace JobMap.API.Services.Implementation
@@ -16,108 +18,159 @@ namespace JobMap.API.Services.Implementation
             _repository = repository;
         }
 
-        public async Task<IEnumerable<JobApplicationResponse>> GetJobApplicationsAsync()
+        public async Task<OperationResult<IEnumerable<JobApplicationResponse>>> GetJobApplicationsAsync()
         {
-            var jobApplications = await _repository.GetJobApplicationsAsync();
 
-            //Map domain model received from repo to dto
-            var response = new List<JobApplicationResponse>();
-
-            foreach (var application in jobApplications)
+            try
             {
-                response.Add(new JobApplicationResponse
+                var jobApplications = await _repository.GetJobApplicationsAsync();
+
+                if (jobApplications == null || !jobApplications.Any())
                 {
-                    Id = application.Id,
-                    CompanyName = application.CompanyName,
-                    RoleTitle = application.RoleTitle,
-                    Location = application.Location,
-                    StatusId = application.StatusId,
-                    MainContactEmail = application.MainContactEmail,
-                    MainContactName = application.MainContactName,
-                    MainContactPhone = application.MainContactPhone,
-                    HiringLikelihoodId = application.HiringLikelihoodId,
-                    OpeningDate = application.OpeningDate,
-                    DateApplied = application.DateApplied,
-                    ClosingDate = application.ClosingDate,
-                    SalaryExpectationRange = application.SalaryExpectationRange,
-                    RequiredDocumentation = application.RequiredDocumentation,
-                    IsClosed = application.IsClosed,
-                    Notes = application.Notes,
-                    CreatedAt = application.CreatedAt,
-                    UpdatedAt = application.UpdatedAt
-                });
+                    return OperationResult<IEnumerable<JobApplicationResponse>>.Success(
+                        new List<JobApplicationResponse>(), "No Job Applications found.");
+                }
+
+                //Map domain model received from repo to dto
+                var response = new List<JobApplicationResponse>();
+
+                foreach (var application in jobApplications)
+                {
+                    response.Add(new JobApplicationResponse
+                    {
+                        Id = application.Id,
+                        CompanyName = application.CompanyName,
+                        RoleTitle = application.RoleTitle,
+                        Location = application.Location,
+                        StatusId = application.StatusId,
+                        MainContactEmail = application.MainContactEmail,
+                        MainContactName = application.MainContactName,
+                        MainContactPhone = application.MainContactPhone,
+                        HiringLikelihoodId = application.HiringLikelihoodId,
+                        OpeningDate = application.OpeningDate,
+                        DateApplied = application.DateApplied,
+                        ClosingDate = application.ClosingDate,
+                        SalaryExpectationRange = application.SalaryExpectationRange,
+                        RequiredDocumentation = application.RequiredDocumentation,
+                        IsClosed = application.IsClosed,
+                        Notes = application.Notes,
+                        CreatedAt = application.CreatedAt,
+                        UpdatedAt = application.UpdatedAt
+                    });
+                }
+
+                return OperationResult<IEnumerable<JobApplicationResponse>>.Success(response, "Successfully retrieved job applications.");
             }
+            catch (Exception ex)
+            {
+                return OperationResult<IEnumerable<JobApplicationResponse>>.Fail($"An Error occured while retrieving job applications: {ex.Message}");
+            }
+            
 
-            return response;
+            
         }
-        public async Task<JobApplicationResponse?> GetJobApplicationByIdAsync(Guid id)
+        public async Task<OperationResult<JobApplicationResponse>> GetJobApplicationByIdAsync(Guid id)
         {
-            var jobApplication = await _repository.GetJobApplicationByIdAsync(id);
-
-            if (jobApplication == null)
-                return null;
-
-            var response = new JobApplicationResponse
+            try
             {
-                Id = jobApplication.Id,
-                CompanyName = jobApplication.CompanyName,
-                RoleTitle = jobApplication.RoleTitle,
-                Location = jobApplication.Location,
-                StatusId = jobApplication.StatusId,
-                MainContactEmail = jobApplication.MainContactEmail,
-                MainContactName = jobApplication.MainContactName,
-                MainContactPhone = jobApplication.MainContactPhone,
-                HiringLikelihoodId = jobApplication.HiringLikelihoodId,
-                OpeningDate = jobApplication.OpeningDate,
-                DateApplied = jobApplication.DateApplied,
-                ClosingDate = jobApplication.ClosingDate,
-                SalaryExpectationRange = jobApplication.SalaryExpectationRange,
-                RequiredDocumentation = jobApplication.RequiredDocumentation,
-                IsClosed = jobApplication.IsClosed,
-                Notes = jobApplication.Notes,
-                CreatedAt = jobApplication.CreatedAt,
-                UpdatedAt = jobApplication.UpdatedAt
-            };
+                var jobApplication = await _repository.GetJobApplicationByIdAsync(id);
 
-            return response;
+                if (jobApplication == null)
+                    return OperationResult<JobApplicationResponse>.Fail("Job application not found.", null);
+
+                var response = new JobApplicationResponse
+                {
+                    Id = jobApplication.Id,
+                    CompanyName = jobApplication.CompanyName,
+                    RoleTitle = jobApplication.RoleTitle,
+                    Location = jobApplication.Location,
+                    StatusId = jobApplication.StatusId,
+                    MainContactEmail = jobApplication.MainContactEmail,
+                    MainContactName = jobApplication.MainContactName,
+                    MainContactPhone = jobApplication.MainContactPhone,
+                    HiringLikelihoodId = jobApplication.HiringLikelihoodId,
+                    OpeningDate = jobApplication.OpeningDate,
+                    DateApplied = jobApplication.DateApplied,
+                    ClosingDate = jobApplication.ClosingDate,
+                    SalaryExpectationRange = jobApplication.SalaryExpectationRange,
+                    RequiredDocumentation = jobApplication.RequiredDocumentation,
+                    IsClosed = jobApplication.IsClosed,
+                    Notes = jobApplication.Notes,
+                    CreatedAt = jobApplication.CreatedAt,
+                    UpdatedAt = jobApplication.UpdatedAt
+                };
+
+                return OperationResult<JobApplicationResponse>.Success(response, "Successfully retrieved job application.");
+            }
+            catch (Exception ex)
+            {
+                return OperationResult<JobApplicationResponse>.Fail($"An error occurred: {ex.Message}");
+            }
         }
 
-        public async Task<OperationResult> CreateJobApplicationAsync(CreateJobApplicationCommand jobApplication)
+        public async Task<OperationResult<JobApplicationResponse>> CreateJobApplicationAsync(CreateJobApplicationRequest jobApplication)
         {
-            //Manually Map Data from DTO to new JobApplication instance
-            var query = new JobApplication
+            try
             {
-                CompanyName = jobApplication.CompanyName,
-                RoleTitle = jobApplication.RoleTitle,
-                Location = jobApplication.Location,
-                StatusId = jobApplication.StatusId,
-                MainContactEmail = jobApplication.MainContactEmail,
-                MainContactName = jobApplication.MainContactName,
-                MainContactPhone = jobApplication.MainContactPhone,
-                HiringLikelihoodId = jobApplication.HiringLikelihoodId,
-                OpeningDate = jobApplication.OpeningDate,
-                DateApplied = jobApplication.DateApplied,
-                ClosingDate = jobApplication.ClosingDate,
-                SalaryExpectationRange = jobApplication.SalaryExpectationRange,
-                RequiredDocumentation = jobApplication.RequiredDocumentation,
-                IsClosed = jobApplication.IsClosed,
-                Notes = jobApplication.Notes,
-                CreatedAt = DateTime.Now,
-                UpdatedAt = DateTime.Now
-            };
+                if (string.IsNullOrWhiteSpace(jobApplication.CompanyName))
+                    return OperationResult<JobApplicationResponse>.Fail("Company name is required.", null);
 
-            await _repository.CreateJobApplicationAsync(query);
+                //Manually Map Data from DTO to new JobApplication instance
+                var query = new JobApplication
+                {
+                    CompanyName = jobApplication.CompanyName,
+                    RoleTitle = jobApplication.RoleTitle,
+                    Location = jobApplication.Location,
+                    StatusId = jobApplication.StatusId,
+                    MainContactEmail = jobApplication.MainContactEmail,
+                    MainContactName = jobApplication.MainContactName,
+                    MainContactPhone = jobApplication.MainContactPhone,
+                    HiringLikelihoodId = jobApplication.HiringLikelihoodId,
+                    OpeningDate = jobApplication.OpeningDate,
+                    DateApplied = jobApplication.DateApplied,
+                    ClosingDate = jobApplication.ClosingDate,
+                    SalaryExpectationRange = jobApplication.SalaryExpectationRange,
+                    RequiredDocumentation = jobApplication.RequiredDocumentation,
+                    IsClosed = jobApplication.IsClosed,
+                    Notes = jobApplication.Notes,
+                    CreatedAt = DateTime.Now,
+                    UpdatedAt = DateTime.Now
+                };
 
-            var response = new OperationResult
+                var resultObject = await _repository.CreateJobApplicationAsync(query);
+
+                var response = new JobApplicationResponse
+                {
+                    Id = resultObject.Id,
+                    CompanyName = resultObject.CompanyName,
+                    RoleTitle = resultObject.RoleTitle,
+                    Location = resultObject.Location,
+                    StatusId = resultObject.StatusId,
+                    MainContactEmail = resultObject.MainContactEmail,
+                    MainContactName = resultObject.MainContactName,
+                    MainContactPhone = resultObject.MainContactPhone,
+                    HiringLikelihoodId = resultObject.HiringLikelihoodId,
+                    OpeningDate = resultObject.OpeningDate,
+                    DateApplied = resultObject.DateApplied,
+                    ClosingDate = resultObject.ClosingDate,
+                    SalaryExpectationRange = resultObject.SalaryExpectationRange,
+                    RequiredDocumentation = resultObject.RequiredDocumentation,
+                    IsClosed = resultObject.IsClosed,
+                    Notes = resultObject.Notes,
+                    CreatedAt = resultObject.CreatedAt,
+                    UpdatedAt = resultObject.UpdatedAt
+
+                };
+
+                return OperationResult<JobApplicationResponse>.Success(response, "Job Application successfully created.");
+            }
+            catch (Exception ex)
             {
-                isSuccess = true,
-                Message = "Job Application Created Successfully!"
-            };
-
-            return response;
+                return OperationResult<JobApplicationResponse>.Fail($"An error occurred: {ex.Message}");
+            }
         }
 
-        public async Task<JobApplicationResponse?> UpdateJobApplicationAsync(Guid id, UpdateJobApplicationCommand jobApplication)
+        public async Task<JobApplicationResponse?> UpdateJobApplicationAsync(Guid id, UpdateJobApplicationRequest jobApplication)
         {
             var newApplication = new JobApplication
             {
@@ -179,14 +232,14 @@ namespace JobMap.API.Services.Implementation
             {
                 return new OperationResult
                 {
-                    isSuccess = false,
+                    IsSuccess = false,
                     Message = "Job Application with id - {" + id.ToString() + "} could not be deleted."
                 };
             }
 
             var response = new OperationResult
             {
-                isSuccess = true,
+                IsSuccess = true,
                 Message = "Job Application with id - {" + id.ToString() +"} deleted."
             };
 

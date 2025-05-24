@@ -1,8 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace JobMap.API.Models.DTOs.JobApplication
+﻿namespace JobMap.API.Models.DTOs.JobApplication
 {
-    public class CreateJobApplicationCommand
+    public class UpdateJobApplicationRequest
     {
         public string CompanyName { get; set; } = string.Empty;
         public string? RoleTitle { get; set; } = string.Empty;
@@ -19,8 +17,6 @@ namespace JobMap.API.Models.DTOs.JobApplication
         public string? RequiredDocumentation { get; set; } = string.Empty;
         public bool IsClosed { get; set; } = false;
         public string? Notes { get; set; } = string.Empty;
-
-        public DateTime? CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
     }
 }
