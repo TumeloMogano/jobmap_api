@@ -309,6 +309,9 @@ paket-files/
 # FAKE - F# Make
 .fake/
 
+/bin/
+/obj/
+
 # CodeRush personal settings
 .cr/personal
 
