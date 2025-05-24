@@ -6,10 +6,10 @@ namespace JobMap.API.Services.Contracts
 {
     public interface IApplicationService
     {
-        Task<IEnumerable<JobApplicationResponse>> GetJobApplicationsAsync();
-        Task<JobApplicationResponse?> GetJobApplicationByIdAsync(Guid id);
-        Task<OperationResult> CreateJobApplicationAsync(CreateJobApplicationCommand jobApplication);
-        Task<JobApplicationResponse?> UpdateJobApplicationAsync(Guid id, UpdateJobApplicationCommand jobApplication);
+        Task<OperationResult<IEnumerable<JobApplicationResponse>>> GetJobApplicationsAsync();
+        Task<OperationResult<JobApplicationResponse>> GetJobApplicationByIdAsync(Guid id);
+        Task<OperationResult<JobApplicationResponse>> CreateJobApplicationAsync(CreateJobApplicationRequest jobApplication);
+        Task<JobApplicationResponse?> UpdateJobApplicationAsync(Guid id, UpdateJobApplicationRequest jobApplication);
         Task<OperationResult> RemoveJobApplicationAsync(Guid id);
     }
 }

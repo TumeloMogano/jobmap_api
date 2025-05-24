@@ -20,41 +20,32 @@ namespace JobMap.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllJobApplications()
         {           
-            try
-            {
-                var result = await _service.GetJobApplicationsAsync();
+            var operation = await _service.GetJobApplicationsAsync();
 
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, "internal Server Error. Please Contact Support. " + ex.Message);
-            }
+            if (operation.IsSuccess)
+                return Ok(operation);
+
+            return BadRequest(new { operation.Message });
+            
         }
 
         [HttpGet]
         [Route("{id:Guid}")]
         public async Task<IActionResult> GetJobApplicationById(Guid id)
         {
-            try
-            {
-                var result = await _service.GetJobApplicationByIdAsync(id);
+            var operation = await _service.GetJobApplicationByIdAsync(id);
 
-                if (result == null)
-                {
-                    return NotFound();
-                }
-                return Ok(result);
-            }
-            catch (Exception ex)
+            if (operation.IsSuccess)
             {
-                return StatusCode(500, "internal Server Error. Please Contact Support. " + ex.Message);
+                return Ok(operation);
             }
 
+            return BadRequest(new { operation.Message });
+            
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateJobApplication([FromForm] CreateJobApplicationCommand model)
+        public async Task<IActionResult> CreateJobApplication([FromForm] CreateJobApplicationRequest model)
         {
             try
             {
@@ -69,7 +60,7 @@ namespace JobMap.API.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateJobApplication(Guid id, UpdateJobApplicationCommand model)
+        public async Task<IActionResult> UpdateJobApplication(Guid id, UpdateJobApplicationRequest model)
         {
             try
             {
