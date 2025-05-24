@@ -1,5 +1,4 @@
 ﻿using JobMap.API.Models.DTOs.JobApplication;
-using JobMap.API.Persistence.Data;
 using JobMap.API.Services.Contracts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -36,9 +35,7 @@ namespace JobMap.API.Controllers
             var operation = await _service.GetJobApplicationByIdAsync(id);
 
             if (operation.IsSuccess)
-            {
                 return Ok(operation);
-            }
 
             return BadRequest(new { operation.Message });
             
@@ -47,52 +44,36 @@ namespace JobMap.API.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateJobApplication([FromForm] CreateJobApplicationRequest model)
         {
-            try
-            {
-                var query = await _service.CreateJobApplicationAsync(model);
+            var operation = await _service.CreateJobApplicationAsync(model);
 
-                return Ok(query);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, "internal Server Error. Please Contact Support. " + ex.Message);
-            }
+            if (operation.IsSuccess)
+                return Ok(operation);
+
+            return BadRequest(new { operation.Message });
+
         }
 
         [HttpPut]
         public async Task<IActionResult> UpdateJobApplication(Guid id, UpdateJobApplicationRequest model)
         {
-            try
-            {
-                var response = await _service.UpdateJobApplicationAsync(id, model);
+            var operation = await _service.UpdateJobApplicationAsync(id, model);
 
-                if (response == null) 
-                    return BadRequest(
-                        new { 
-                               message = "Bad Request, could not update job application."                               
-                             });
+            if (operation.IsSuccess)
+                return Ok(operation);
 
-                return Ok(response);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, "internal Server Error. Please Contact Support. " + ex.Message);
-            }
+            return BadRequest(new { operation.Message });
+
         }
 
         [HttpDelete]
         public async Task<IActionResult> RemoveJobApplication(Guid id)
         {
-            try
-            {
-                var result = await _service.RemoveJobApplicationAsync(id);
+            var operation = await _service.RemoveJobApplicationAsync(id);
 
-                 return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, "internal Server Error. Please Contact Support. " + ex.Message);
-            }
+            if (operation.IsSuccess)
+                return Ok(operation);
+
+            return BadRequest(new { operation.Message });
         }
 
     }

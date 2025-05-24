@@ -9,7 +9,7 @@ namespace JobMap.API.Services.Contracts
         Task<OperationResult<IEnumerable<JobApplicationResponse>>> GetJobApplicationsAsync();
         Task<OperationResult<JobApplicationResponse>> GetJobApplicationByIdAsync(Guid id);
         Task<OperationResult<JobApplicationResponse>> CreateJobApplicationAsync(CreateJobApplicationRequest jobApplication);
-        Task<JobApplicationResponse?> UpdateJobApplicationAsync(Guid id, UpdateJobApplicationRequest jobApplication);
+        Task<OperationResult<JobApplicationResponse>> UpdateJobApplicationAsync(Guid id, UpdateJobApplicationRequest jobApplication);
         Task<OperationResult> RemoveJobApplicationAsync(Guid id);
     }
 }
